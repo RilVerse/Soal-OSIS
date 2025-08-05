@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="id">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>
+			Login Admin - Sistem Keamanan
+			Tinggi
+		</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				font-family: "Segoe UI",
+					Tahoma, Geneva,
+					Verdana, sans-serif;
+			}
+
+			body {
+				background: linear-gradient(
+					135deg,
+					#0f1a3d,
+					#1c2e4a
+				);
+				min-height: 100vh;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 20px;
+				animation: gradientAnimation
+					15s ease infinite;
+				background-size: 200% 200%;
+				position: relative;
+				overflow: hidden;
+			}
+
+			@keyframes gradientAnimation {
+				0% {
+					background-position: 0%
+						50%;
+				}
+				50% {
+					background-position: 100%
+						50%;
+				}
+				100% {
+					background-position: 0%
+						50%;
+				}
+			}
+
+			body::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: radial-gradient(
+						circle at 10%
+							20%,
+						rgba(
+								41,
+								128,
+								185,
+								0.1
+							)
+							0%,
+						transparent
+							15%
+					),
+					radial-gradient(
+						circle at 90%
+							80%,
+						rgba(
+								46,
+								204,
+								113,
+								0.1
+							)
+							0%,
+						transparent
+							15%
+					),
+					radial-gradient(
+						circle at 30%
+							70%,
+						rgba(
+								155,
+								89,
+								182,
+								0.1
+							)
+							0%,
+						transparent
+							15%
+					);
+				z-index: -1;
+			}
+
+			.security-overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><rect fill="none" stroke="rgba(52, 152, 219, 0.03)" stroke-width="0.5" x="0" y="0" width="100" height="100"/></svg>');
+				background-size: 20px 20px;
+				z-index: -1;
+			}
+
+			.login-container {
+				background: rgba(
+					19,
+					26,
+					42,
+					0.9
+				);
+				border-radius: 15px;
+				box-shadow:
+					0 10px 30px
+						rgba(
+							0,
+							0,
+							0,
+							0.5
+						),
+					inset 0 0 20px
+						rgba(
+							52,
+							152,
+							219,
+							0.1
+						);
+				width: 100%;
+				max-width: 450px;
+				padding: 40px 35px;
+				position: relative;
+				overflow: hidden;
+				animation: slideUp 0.8s
+					cubic-bezier(
+						0.175,
+						0.885,
+						0.32,
+						1.275
+					);
+				border: 1px solid
+					rgba(
+						52,
+						152,
+						219,
+						0.2
+					);
+				backdrop-filter: blur(
+					5px
+				);
+			}
+
+			@keyframes slideUp {
+				from {
+					opacity: 0;
+					transform: translateY(
+						50px
+					);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(
+						0
+					);
+				}
+			}
+
+			.login-header {
+				text-align: center;
+				margin-bottom: 35px;
+				position: relative;
+			}
+
+			.login-header::after {
+				content: "";
+				position: absolute;
+				bottom: -15px;
+				left: 50%;
+				transform: translateX(
+					-50%
+				);
+				width: 80px;
+				height: 3px;
+				background: linear-gradient(
+					to right,
+					#3498db,
+					#2ecc71
+				);
+				border-radius: 3px;
+			}
+
+			.login-header h1 {
+				color: #fff;
+				font-size: 28px;
+				margin-bottom: 10px;
+				font-weight: 700;
+				letter-spacing: 1px;
+				text-shadow: 0 2px 5px
+					rgba(0, 0, 0, 0.3);
+			}
+
+			.login-header p {
+				color: #bdc3c7;
+				font-size: 14px;
+				line-height: 1.5;
+			}
+
+			.logo {
+				width: 90px;
+				height: 90px;
+				background: linear-gradient(
+					135deg,
+					#1a2980,
+					#26d0ce
+				);
+				border-radius: 50%;
+				margin: 0 auto 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: white;
+				font-size: 36px;
+				box-shadow:
+					0 5px 20px
+						rgba(
+							26,
+							41,
+							128,
+							0.5
+						),
+					inset 0 0 10px
+						rgba(
+							255,
+							255,
+							255,
+							0.3
+						);
+				border: 2px solid
+					rgba(
+						255,
+						255,
+						255,
+						0.1
+					);
+				animation: logoPulse 3s
+					infinite;
+			}
+
+			@keyframes logoPulse {
+				0% {
+					transform: scale(1);
+					box-shadow: 0 5px
+						20px
+						rgba(
+							26,
+							41,
+							128,
+							0.5
+						);
+				}
+				50% {
+					transform: scale(
+						1.03
+					);
+					box-shadow: 0 8px
+						25px
+						rgba(
+							26,
+							41,
+							128,
+							0.7
+						);
+				}
+				100% {
+					transform: scale(1);
+					box-shadow: 0 5px
+						20px
+						rgba(
+							26,
+							41,
+							128,
+							0.5
+						);
+				}
+			}
+
+			.input-group {
+				margin-bottom: 25px;
+				position: relative;
+			}
+
+			.input-group label {
+				display: block;
+				margin-bottom: 10px;
+				color: #ecf0f1;
+				font-weight: 600;
+				font-size: 14px;
+				letter-spacing: 0.5px;
+			}
+
+			.input-group input {
+				width: 100%;
+				padding: 16px 50px 16px
+					20px;
+				background: rgba(
+					30,
+					40,
+					60,
+					0.7
+				);
+				border: 2px solid #2c3e50;
+				border-radius: 10px;
+				font-size: 16px;
+				transition: all 0.3s ease;
+				color: #ecf0f1;
+				letter-spacing: 1px;
+			}
+
+			.input-group
+				input::placeholder {
+				color: #7f8c8d;
+			}
+
+			.input-group input:focus {
+				border-color: #3498db;
+				outline: none;
+				box-shadow: 0 0 0 3px
+					rgba(
+						52,
+						152,
+						219,
+						0.3
+					);
+				background: rgba(
+					40,
+					55,
+					85,
+					0.8
+				);
+			}
+
+			.input-group i {
+				position: absolute;
+				right: 20px;
+				top: 43px;
+				color: #7f8c8d;
+				font-size: 18px;
+			}
+
+			.input-group input:focus + i {
+				color: #3498db;
+			}
+
+			.options {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 30px;
+				font-size: 14px;
+			}
+
+			.remember-me {
+				display: flex;
+				align-items: center;
+			}
+
+			.remember-me input {
+				margin-right: 10px;
+				accent-color: #3498db;
+				cursor: pointer;
+			}
+
+			.remember-me label {
+				color: #bdc3c7;
+				cursor: pointer;
+			}
+
+			.forgot-password {
+				color: #3498db;
+				text-decoration: none;
+				font-weight: 600;
+				transition: color 0.3s;
+			}
+
+			.forgot-password:hover {
+				color: #2ecc71;
+				text-decoration: underline;
+			}
+
+			.btn-login {
+				width: 100%;
+				padding: 16px;
+				background: linear-gradient(
+					to right,
+					#1a2980,
+					#26d0ce
+				);
+				border: none;
+				border-radius: 10px;
+				color: white;
+				font-size: 17px;
+				font-weight: 700;
+				cursor: pointer;
+				transition: all 0.4s ease;
+				box-shadow: 0 5px 20px
+					rgba(
+						26,
+						41,
+						128,
+						0.5
+					);
+				letter-spacing: 1px;
+				text-transform: uppercase;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.btn-login::after {
+				content: "";
+				position: absolute;
+				top: -50%;
+				left: -60%;
+				width: 20px;
+				height: 200%;
+				background: rgba(
+					255,
+					255,
+					255,
+					0.3
+				);
+				transform: rotate(30deg);
+				transition: all 0.6s;
+			}
+
+			.btn-login:hover {
+				transform: translateY(
+					-3px
+				);
+				box-shadow: 0 8px 25px
+					rgba(
+						26,
+						41,
+						128,
+						0.7
+					);
+			}
+
+			.btn-login:hover::after {
+				left: 120%;
+			}
+
+			.btn-login:active {
+				transform: translateY(0);
+			}
+
+			.security-info {
+				background: rgba(
+					30,
+					40,
+					60,
+					0.6
+				);
+				border-radius: 10px;
+				padding: 15px;
+				margin: 25px 0 15px;
+				font-size: 14px;
+				color: #bdc3c7;
+				border-left: 4px solid
+					#3498db;
+				text-align: center;
+			}
+
+			.security-info i {
+				color: #3498db;
+				margin-right: 8px;
+			}
+
+			.notification {
+				position: absolute;
+				top: 20px;
+				left: 50%;
+				transform: translateX(
+					-50%
+				);
+				padding: 15px 30px;
+				background: #e74c3c;
+				color: white;
+				border-radius: 8px;
+				font-weight: 600;
+				opacity: 0;
+				transition:
+					opacity 0.3s,
+					top 0.3s;
+				pointer-events: none;
+				box-shadow: 0 5px 15px
+					rgba(
+						231,
+						76,
+						60,
+						0.4
+					);
+				z-index: 100;
+				text-align: center;
+			}
+
+			.notification.show {
+				opacity: 1;
+				top: 30px;
+			}
+
+			.decoration {
+				position: absolute;
+				width: 150px;
+				height: 150px;
+				border-radius: 50%;
+				background: rgba(
+					52,
+					152,
+					219,
+					0.05
+				);
+				z-index: -1;
+			}
+
+			.decoration:nth-child(1) {
+				top: -60px;
+				right: -60px;
+				animation: float 8s
+					infinite ease-in-out;
+			}
+
+			.decoration:nth-child(2) {
+				bottom: -80px;
+				left: -70px;
+				width: 200px;
+				height: 200px;
+				background: rgba(
+					38,
+					208,
+					206,
+					0.05
+				);
+				animation: float 10s
+					infinite ease-in-out;
+			}
+
+			@media (max-width: 500px) {
+				.login-container {
+					padding: 30px 20px;
+					max-width: 95%;
+				}
+
+				.login-header h1 {
+					font-size: 24px;
+				}
+
+				.logo {
+					width: 75px;
+					height: 75px;
+					font-size: 30px;
+				}
+
+				.options {
+					flex-direction: column;
+					align-items: flex-start;
+					gap: 12px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="security-overlay"></div>
+
+		<div class="login-container">
+			<div class="decoration"></div>
+			<div class="decoration"></div>
+
+			<div class="login-header">
+				<div class="logo">
+					<i
+						class="fas fa-lock"></i>
+				</div>
+				<h1>Login Page</h1>
+				<p>
+					Silakan masukkan
+					username dan
+					password untuk masuk
+					ke soal
+				</p>
+			</div>
+
+			<form id="loginForm">
+				<div class="input-group">
+					<label
+						for="username"
+						><i
+							class="fas fa-user-circle"></i>
+						USERNAME</label
+					>
+					<input
+						type="text"
+						id="username"
+						placeholder="Masukkan username Anda"
+						required
+						autocomplete="off" />
+					<i
+						class="fas fa-user"></i>
+				</div>
+
+				<div class="input-group">
+					<label
+						for="password"
+						><i
+							class="fas fa-key"></i>
+						PASSWORD</label
+					>
+					<input
+						type="password"
+						id="password"
+						placeholder="Masukkan password Anda"
+						required
+						autocomplete="off" />
+					<i
+						class="fas fa-eye"
+						id="togglePassword"></i>
+				</div>
+
+				<div class="options">
+					<div
+						class="remember-me">
+						<input
+							type="checkbox"
+							id="remember" />
+						<label
+							for="remember"
+							>Ingat
+							perangkat
+							ini</label
+						>
+					</div>
+					<a
+						href="#"
+						class="forgot-password"
+						>Lupa
+						password?</a
+					>
+				</div>
+
+				<button
+					type="submit"
+					class="btn-login">
+					<i
+						class="fas fa-sign-in-alt"></i>
+					MASUK KE SOAL
+				</button>
+			</form>
+		</div>
+
+		<div
+			class="notification"
+			id="notification">
+			Password salah! Silakan coba
+			lagi.
+		</div>
+
+		<script>
+			document.addEventListener(
+				"DOMContentLoaded",
+				function () {
+					const loginForm =
+						document.getElementById(
+							"loginForm",
+						);
+					const togglePassword =
+						document.getElementById(
+							"togglePassword",
+						);
+					const passwordInput =
+						document.getElementById(
+							"password",
+						);
+					const notification =
+						document.getElementById(
+							"notification",
+						);
+
+					// Toggle password visibility
+					togglePassword.addEventListener(
+						"click",
+						function () {
+							const type =
+								passwordInput.getAttribute(
+									"type",
+								) ===
+								"password"
+									? "text"
+									: "password";
+							passwordInput.setAttribute(
+								"type",
+								type,
+							);
+							this.classList.toggle(
+								"fa-eye",
+							);
+							this.classList.toggle(
+								"fa-eye-slash",
+							);
+						},
+					);
+
+					// Form submission
+					loginForm.addEventListener(
+						"submit",
+						function (e) {
+							e.preventDefault();
+
+							const username =
+								document.getElementById(
+									"username",
+								).value;
+							const password =
+								document.getElementById(
+									"password",
+								).value;
+							const correctPassword =
+								"ADMIN#1234"; // Password yang benar
+
+							// Validasi password
+							if (
+								password ===
+								correctPassword
+							) {
+								// Simulasi loading
+								const btn =
+									document.querySelector(
+										".btn-login",
+									);
+								const originalBtnText =
+									btn.innerHTML;
+								btn.innerHTML =
+									'<i class="fas fa-spinner fa-spin"></i> MEMVERIFIKASI...';
+								btn.disabled = true;
+
+								// Animasi sukses
+								document.querySelector(
+									".logo",
+								).style.background =
+									"linear-gradient(135deg, #2ecc71, #26d0ce)";
+
+								setTimeout(
+									() => {
+										// Tampilkan efek sukses
+										document.body.innerHTML = `
+                            <div style="
+                                background: linear-gradient(135deg, #0f1a3d, #1c2e4a);
+                                min-height: 100vh;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                padding: 20px;
+                                text-align: center;
+                                color: white;
+                                position: relative;
+                                overflow: hidden;
+                            ">
+                                <div style="
+                                    background: rgba(19, 26, 42, 0.9);
+                                    border-radius: 15px;
+                                    padding: 50px 40px;
+                                    max-width: 500px;
+                                    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+                                    border: 1px solid rgba(52, 152, 219, 0.2);
+                                    position: relative;
+                                    z-index: 2;
+                                ">
+                                    <div style="
+                                        width: 100px;
+                                        height: 100px;
+                                        background: linear-gradient(135deg, #2ecc71, #26d0ce);
+                                        border-radius: 50%;
+                                        margin: 0 auto 25px;
+                                        display: flex;
+                                        align-items: center;
+                                        justify-content: center;
+                                        font-size: 40px;
+                                        color: white;
+                                        box-shadow: 0 5px 20px rgba(46, 204, 113, 0.5);
+                                        animation: pulse 2s infinite;
+                                    ">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    
+                                    <h1 style="font-size: 32px; margin-bottom: 20px; color: #2ecc71;">Login BERHASIL</h1>
+                                    <p style="font-size: 18px; margin-bottom: 30px; line-height: 1.6;">
+                                        Selamat datang, <strong>${username}</strong>!<br>
+                                        Anda telah berhasil masuk ke Soal.
+
+                                </div>
+                                
+                                <style>
+                                    @keyframes pulse {
+                                        0% { transform: scale(1); box-shadow: 0 5px 20px rgba(46, 204, 113, 0.5); }
+                                        50% { transform: scale(1.1); box-shadow: 0 8px 25px rgba(46, 204, 113, 0.7); }
+                                        100% { transform: scale(1); box-shadow: 0 5px 20px rgba(46, 204, 113, 0.5); }
+                                    }
+                                </style>
+                            </div>
+                        `;
+										setTimeout(
+											() => {
+												window.location.href =
+													"github.com/RilVerse"; // Ganti "soal.html" dengan URL tujuan kamu
+											},
+											3000,
+										);
+									},
+									2000,
+								);
+							} else {
+								// Tampilkan notifikasi error
+								notification.textContent =
+									"Password salah! Silakan coba lagi.";
+								notification.classList.add(
+									"show",
+								);
+
+								// Animasi error pada form
+								loginForm.classList.add(
+									"error",
+								);
+								setTimeout(
+									() => {
+										loginForm.classList.remove(
+											"error",
+										);
+									},
+									1000,
+								);
+
+								// Sembunyikan notifikasi setelah 3 detik
+								setTimeout(
+									() => {
+										notification.classList.remove(
+											"show",
+										);
+									},
+									3000,
+								);
+
+								// Reset password field
+								passwordInput.value =
+									"";
+								strengthMeter.style.width =
+									"0%";
+							}
+						},
+					);
+				},
+			);
+		</script>
+	</body>
+</html>
